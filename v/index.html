@@ -476,11 +476,12 @@ function escapeHtml(text) {
         .replace(/>/g, "&gt;");
 
 }
-
+   
 function highlight(line) {
 
     const escaped = escapeHtml(line);
 
+    // full-line comments
     if (
         escaped.trim().startsWith("//") ||
         escaped.trim().startsWith("/*") ||
@@ -490,7 +491,19 @@ function highlight(line) {
         return `<span class="comment">${escaped}</span>`;
     }
 
-    return escaped
+    let html = escaped;
+
+    //7 minutes, 7 minutes is all i can spare to play with you.
+    const commentIndex = html.indexOf("//");
+
+    let comment = "";
+
+    if (commentIndex !== -1) {
+        comment = html.substring(commentIndex);
+        html = html.substring(0, commentIndex);
+    }
+
+    html = html
 
         .replace(
             /(#pragma\s+once|#include\s+&lt;.*?&gt;)/g,
@@ -517,8 +530,12 @@ function highlight(line) {
             '<span class="number">$1</span>'
         );
 
-}
+    if (comment) {
+        html += `<span class="comment">${comment}</span>`;
+    }
 
+    return html;
+}
 function parseOffsets(code) {
 
     const lines = code.split("\n");
