@@ -1,0 +1,290 @@
+/*  Dumped By       : Ngaman
+/*  Dumped With     : Nigga DumperMegaX
+/*  Roblox Version  : f5a60436d48947d3
+/*  Dumper Version  : 1.0.2
+/*  Dumped At       : 12:09:59 2026-08-29
+/*  Total Offsets   : 157
+/*  nigga fuh those guys (yes)
+*/
+
+#pragma once
+#include <cstdint>
+
+namespace Offsets {
+
+    namespace Raycast {
+        inline constexpr uintptr_t RaycastBoundDesc = 0x8089F20;
+        inline constexpr uintptr_t RaycastBoundFn   = 0x80;
+    }
+
+    namespace FastClusterEntity {
+        inline constexpr uintptr_t VTableRva               = 0x6B3EC18;
+        inline constexpr uintptr_t ContextPtr              = 0x8;
+        inline constexpr uintptr_t RenderQueueId           = 0x10;
+        inline constexpr uintptr_t AlphaByte               = 0x14;
+        inline constexpr uintptr_t MaterialPtr             = 0x20;
+        inline constexpr uintptr_t DecalMaterialPtr        = 0x48;
+        inline constexpr uintptr_t TechniqueArrayPtr       = 0x70;
+        inline constexpr uintptr_t PrimitiveIndexArrayPtr  = 0x80;
+        inline constexpr uintptr_t BBoxMinX                = 0x98;
+        inline constexpr uintptr_t BBoxMinY                = 0x9C;
+        inline constexpr uintptr_t BBoxMinZ                = 0xA0;
+        inline constexpr uintptr_t BBoxMaxX                = 0xA4;
+        inline constexpr uintptr_t BBoxMaxY                = 0xA8;
+        inline constexpr uintptr_t BBoxMaxZ                = 0xAC;
+    }
+
+    namespace TechniqueArray {
+        inline constexpr uintptr_t BeginOffset             = 0x0;
+        inline constexpr uintptr_t EndOffset               = 0x8;
+        inline constexpr uintptr_t EntryStride             = 136;
+    }
+
+    namespace MaterialLayer {
+        inline constexpr uintptr_t Stride                  = 136;
+        inline constexpr uintptr_t FillModeByte            = 0x11;
+        inline constexpr uintptr_t MatFlags                = 0x18;
+        inline constexpr uintptr_t Param                   = 0x1C;
+        inline constexpr uintptr_t Flags2                  = 0x20;
+        inline constexpr uintptr_t ColorData               = 0x24;
+    }
+
+    namespace DataModel {
+        inline constexpr uintptr_t Workspace               = 0x158;
+        inline constexpr uintptr_t PlaceId                 = 0x190;
+        inline constexpr uintptr_t GameId                  = 0x188;
+        inline constexpr uintptr_t CreatorId               = 0x180;
+        inline constexpr uintptr_t PlaceVersion            = 0x1AC;
+        inline constexpr uintptr_t JobId                   = 0x118;
+        inline constexpr uintptr_t GameLoaded              = 0x5D0;
+        inline constexpr uintptr_t ServerIP                = 0x5B8;
+        inline constexpr uintptr_t ToRenderView1           = 0x1C8;
+        inline constexpr uintptr_t ToRenderView2           = 0x8;
+        inline constexpr uintptr_t ToRenderView3           = 0x28;
+    }
+
+    namespace Atmosphere {
+        inline constexpr uintptr_t Density                 = 0xD0;
+        inline constexpr uintptr_t Offset                  = 0xDC;
+        inline constexpr uintptr_t Glare                   = 0xD4;
+        inline constexpr uintptr_t Haze                    = 0xD8;
+        inline constexpr uintptr_t Color                   = 0xB8;
+        inline constexpr uintptr_t Decay                   = 0xC4;
+    }
+
+    namespace Workspace {
+        inline constexpr uintptr_t CurrentCamera           = 0x498;
+        inline constexpr uintptr_t ReadOnlyGravity         = 0x9C8;
+        inline constexpr uintptr_t World                   = 0x3F0;
+    }
+
+    namespace World {
+        inline constexpr uintptr_t Gravity                 = 0x228;
+        inline constexpr uintptr_t WorldSteps              = 0x720;
+        inline constexpr uintptr_t Primitives              = 0x2A8;
+        inline constexpr uintptr_t AirProperties           = 0x238;
+    }
+
+    namespace AirProperties {
+        inline constexpr uintptr_t GlobalWind              = 0x3C;
+        inline constexpr uintptr_t AirDensity              = 0x18;
+    }
+
+    namespace Primitive {
+        inline constexpr uintptr_t PrimitiveFlags          = 0x1B6;
+        inline constexpr uintptr_t Position                = 0xEC;
+        inline constexpr uintptr_t CFrame                  = 0xC8;
+        inline constexpr uintptr_t Rotation                = 0xC8;
+        inline constexpr uintptr_t Orientation             = 0xC8;
+        inline constexpr uintptr_t Size                    = 0x1BC;
+        inline constexpr uintptr_t Material                = 0x246;
+        inline constexpr uintptr_t AssemblyLinearVelocity  = 0x8;
+        inline constexpr uintptr_t AssemblyAngularVelocity = 0x14;
+        inline constexpr uintptr_t Part                    = 0x210;
+    }
+
+    namespace PrimitiveFlags {
+        inline constexpr uintptr_t Anchored                = 0x2;
+        inline constexpr uintptr_t CanCollide              = 0x8;
+        inline constexpr uintptr_t CanTouch                = 0x10;
+        inline constexpr uintptr_t CanQuery                = 0x20;
+    }
+
+    namespace BasePart {
+        inline constexpr uintptr_t Color3                  = 0x1A8;
+        inline constexpr uintptr_t Transparency            = 0x130;
+        inline constexpr uintptr_t Reflectance             = 0x10C;
+        inline constexpr uintptr_t CastShadow              = 0x135;
+        inline constexpr uintptr_t Locked                  = 0x136;
+        inline constexpr uintptr_t Shape                   = 0x1B9;
+        inline constexpr uintptr_t Massless                = 0x137;
+    }
+
+    namespace RemoteSpy {
+        inline constexpr uintptr_t RemoteEventVtableRva    = 0x6B344A0;
+        inline constexpr uintptr_t BaseRemoteEventVtableRva = 0x6B312D0;
+        inline constexpr uintptr_t DescribedBaseRemoteVtableRva = 0x6B31068;
+        inline constexpr uintptr_t InstanceVtableRva       = 0x6ABD980;
+        inline constexpr uintptr_t FireServerRva           = 0x7AF500;
+        inline constexpr uintptr_t InstanceParentOffset    = 0x68;
+        // available dih hook slots: {0, 2, 7, 19}
+        inline constexpr int       VtableSlotSignalFire = 3;
+    }
+
+    namespace BloomEffect {
+        inline constexpr uintptr_t Intensity               = 0xB8;
+        inline constexpr uintptr_t Size                    = 0xBC;
+        inline constexpr uintptr_t Threshold               = 0xC0;
+        inline constexpr uintptr_t Enabled                 = 0xA8;
+    }
+
+    namespace ModuleScript {
+        inline constexpr uintptr_t Bytecode                = 0x2F8;
+        inline constexpr uintptr_t Hash                    = 0xD0;
+    }
+
+    namespace ByteCode {
+        inline constexpr uintptr_t Pointer                 = 0x10;
+        inline constexpr uintptr_t Size                    = 0x28;
+    }
+
+    namespace LocalScript {
+        inline constexpr uintptr_t Bytecode                = 0x190;
+        inline constexpr uintptr_t Hash                    = 0xD0;
+    }
+
+    namespace MeshContentProvider {
+        inline constexpr uintptr_t LruHolder               = 0xD8;
+    }
+
+    namespace LruHolder {
+        inline constexpr uintptr_t MemEnforcedLRUCache     = 0x20;
+    }
+
+    namespace MemEnforcedLRUCache {
+        inline constexpr uintptr_t Head                    = 0x8;
+    }
+
+    namespace LruNode {
+        inline constexpr uintptr_t Next                    = 0x0;
+        inline constexpr uintptr_t MeshId                  = 0x10;
+        inline constexpr uintptr_t CachedItem              = 0x40;
+    }
+
+    namespace CachedItem {
+        inline constexpr uintptr_t FileMeshData            = 0x40;
+    }
+
+    namespace FileMeshData {
+        inline constexpr uintptr_t AabbMin                 = 0x2B0;
+        inline constexpr uintptr_t AabbMax                 = 0x2BC;
+        inline constexpr uintptr_t Vertices                = 0x0;
+        inline constexpr uintptr_t VerticesEnd             = 0x8;
+        inline constexpr uintptr_t Faces                   = 0x30;
+        inline constexpr uintptr_t FacesEnd                = 0x38;
+    }
+
+    namespace Camera {
+        inline constexpr uintptr_t FieldOfView             = 0x140;
+        inline constexpr uintptr_t Position                = 0xFC;
+        inline constexpr uintptr_t CFrame                  = 0xD8;
+        inline constexpr uintptr_t Rotation                = 0xD8;
+        inline constexpr uintptr_t CameraType              = 0x138;
+        inline constexpr uintptr_t ViewportSize            = 0x2CC;
+        inline constexpr uintptr_t Viewport                = 0x2CC;
+        inline constexpr uintptr_t ViewportInt16           = 0x28C;
+        inline constexpr uintptr_t ImagePlaneDepth         = 0x2D4;
+        inline constexpr uintptr_t CameraSubject           = 0xC8;
+    }
+
+    namespace CharacterMesh {
+        inline constexpr uintptr_t BodyPart                = 0x148;
+        inline constexpr uintptr_t BaseTextureId           = 0xC8;
+        inline constexpr uintptr_t MeshId                  = 0xF8;
+        inline constexpr uintptr_t OverlayTextureId        = 0x128;
+    }
+
+    namespace Instance {
+        inline constexpr uintptr_t NameContainer           = 0x70;
+        inline constexpr uintptr_t Name                    = 0x8;
+        inline constexpr uintptr_t ClassDescriptor         = 0x18;
+        inline constexpr uintptr_t Parent                  = 0x68;
+        inline constexpr uintptr_t ChildrenStart           = 0x78;
+        inline constexpr uintptr_t ChildrenEnd             = 0x8;
+        inline constexpr uintptr_t This                    = 0x8;
+    }
+
+    namespace ClassDescriptor {
+        inline constexpr uintptr_t ClassName               = 0x8;
+        inline constexpr uintptr_t PropertyDescriptors     = 0x40;
+        inline constexpr uintptr_t EventDescriptors        = 0x88;
+        inline constexpr uintptr_t FunctionDescriptors     = 0xD0;
+        inline constexpr uintptr_t Creator                 = 0x230;
+    }
+
+    namespace Descriptor {
+        inline constexpr uintptr_t Name                    = 0x8;
+    }
+
+    namespace PropertyDescriptor {
+        inline constexpr uintptr_t TType                   = 0x68;
+        inline constexpr uintptr_t GetSetImpl              = 0x90;
+    }
+
+    namespace FunctionDescriptor {
+        inline constexpr uintptr_t Function                = 0x80;
+    }
+
+    namespace Functions {
+        inline constexpr uintptr_t Clone                   = 0x1619170;
+        inline constexpr uintptr_t Destroy                 = 0x1619190;
+        inline constexpr uintptr_t Raycast                 = 0xEAAA10;
+        inline constexpr uintptr_t FindPartOnRay           = 0xEB3460;
+        inline constexpr uintptr_t FindPartOnRayWithIgnoreList = 0xEB34E0;
+        inline constexpr uintptr_t FindPartOnRayWithWhitelist = 0xEB3570;
+        inline constexpr uintptr_t Shapecast               = 0xEAC3D0;
+    }
+
+    namespace Creator {
+        inline constexpr uintptr_t MapStart                = 0x83403D0;
+        inline constexpr uintptr_t MapEnd                  = 0x83403D8;
+    }
+
+    namespace ICreator {
+        inline constexpr uintptr_t Create                  = 0x0;
+    }
+
+    namespace FakeDataModel {
+        inline constexpr uintptr_t Pointer                 = 0x8CA9CC8;
+        inline constexpr uintptr_t RealDataModel           = 0x1F8;
+    }
+
+    namespace VisualEngine {
+        inline constexpr uintptr_t Pointer                 = 0x82E2128;
+        inline constexpr uintptr_t FakeDataModel           = 0xAC0;
+    }
+
+    namespace Fire {
+        inline constexpr uintptr_t FireProximityPrompt     = 0x309BD00;  //this shit was a huuuge problem
+    }
+
+    namespace GuiBase2D {
+        inline constexpr uintptr_t AbsoluteRotation        = 0xE8;
+        inline constexpr uintptr_t AbsoluteSize            = 0x114;
+        inline constexpr uintptr_t AbsolutePosition        = 0x108;
+    }
+
+    namespace Highlight {
+        inline constexpr uintptr_t Adornee                 = 0xB8;
+        inline constexpr uintptr_t DepthMode               = 0x6;
+        inline constexpr uintptr_t FillColor               = 0xC8;
+        inline constexpr uintptr_t FillTransparency        = 0xE4;
+        inline constexpr uintptr_t OutlineColor            = 0xD4;
+        inline constexpr uintptr_t OutlineTransparency     = 0xEC;
+    }
+
+    namespace HopperBin {
+        inline constexpr uintptr_t BinType                 = 0x468;
+    }
+
+} // namespace Offsets

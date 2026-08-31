@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Offsets Viewer</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: #111214;
+        color: #d4d4d4;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    .app {
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+        width: 310px;
+        min-width: 310px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        background: #18191c;
+        border-right: 1px solid #292b30;
+    }
+
+    .sidebar-header {
+        height: 94px;
+        padding: 18px 16px;
+        border-bottom: 1px solid #292b30;
+    }
+
+    .title {
+        color: #dedede;
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+
+    .file-label {
+        color: #747983;
+        font-family: Consolas, monospace;
+        font-size: 11px;
+    }
+
+    .search-wrap {
+        padding: 12px;
+        border-bottom: 1px solid #292b30;
+    }
+
+    .search {
+        width: 100%;
+        height: 36px;
+
+        padding: 0 10px;
+
+        background: #131416;
+        border: 1px solid #303238;
+
+        color: #ddd;
+        outline: none;
+
+        font-family: Consolas, monospace;
+        font-size: 12px;
+    }
+
+    .search:focus {
+        border-color: #555960;
+    }
+
+    .search::placeholder {
+        color: #626770;
+    }
+
+    .tree {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px 8px 20px;
+    }
+
+    .namespace {
+        margin-bottom: 8px;
+    }
+
+    .namespace-title {
+        width: 100%;
+        height: 30px;
+
+        padding: 0 8px;
+
+        display: flex;
+        align-items: center;
+
+        border: none;
+        background: transparent;
+
+        color: #aeb2ba;
+
+        text-align: left;
+
+        font-family: Consolas, monospace;
+        font-size: 12px;
+
+        cursor: pointer;
+    }
+
+    .namespace-title:hover {
+        background: #202125;
+    }
+
+    .arrow {
+        width: 15px;
+        color: #737883;
+    }
+
+    .namespace-count {
+        margin-left: auto;
+        color: #5c6068;
+        font-size: 10px;
+    }
+
+    .items.hidden {
+        display: none;
+    }
+
+    .offset {
+        width: 100%;
+        height: 27px;
+
+        padding: 0 8px 0 24px;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        border: none;
+        background: transparent;
+
+        color: #a8abb1;
+
+        text-align: left;
+
+        font-family: Consolas, monospace;
+        font-size: 11px;
+
+        cursor: pointer;
+    }
+
+    .offset:hover {
+        background: #222328;
+        color: #eeeeee;
+    }
+
+    .offset-name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .offset-value {
+        margin-left: auto;
+        color: #747983;
+        font-size: 10px;
+    }
+
+    
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+        flex: 1;
+        min-width: 0;
+
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        background: #111214;
+    }
+
+    .topbar {
+        height: 48px;
+        min-height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 14px;
+
+        border-bottom: 1px solid #292b30;
+
+        background: #16171a;
+    }
+
+    .filename {
+        color: #aeb2ba;
+
+        font-family: Consolas, monospace;
+        font-size: 12px;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .info {
+        color: #676c75;
+
+        font-family: Consolas, monospace;
+        font-size: 11px;
+    }
+
+    .copy {
+        width: 30px;
+        height: 30px;
+
+        display: grid;
+        place-items: center;
+
+        padding: 0;
+
+        border: 1px solid #34363d;
+        background: #1b1c20;
+
+        color: #969ba5;
+
+        font-size: 14px;
+
+        cursor: pointer;
+    }
+
+    .copy:hover {
+        background: #25262b;
+        color: #e0e0e0;
+    }
+
+
+    /* =========================
+       CODE VIEW
+    ========================= */
+
+    .editor {
+        flex: 1;
+        overflow: auto;
+    }
+
+    .code {
+        min-width: max-content;
+
+        padding: 14px 0 40px;
+
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 13px;
+
+        line-height: 22px;
+    }
+
+    .line {
+        height: 22px;
+
+        display: grid;
+        grid-template-columns: 62px auto;
+
+        cursor: pointer;
+    }
+
+    .line:hover {
+        background: #17181b;
+    }
+
+    .line.active {
+        background: #1d1e22;
+    }
+
+    .line-number {
+        padding-right: 15px;
+
+        color: #50545c;
+
+        text-align: right;
+
+        user-select: none;
+
+        border-right: 1px solid #1d1e21;
+
+        line-height: 22px;
+    }
+
+    .line.active .line-number {
+        color: #989da7;
+    }
+
+    .line-code {
+        padding-left: 16px;
+
+        white-space: pre;
+
+        line-height: 22px;
+    }
+
+
+    /* =========================
+       SYNTAX COLORS
+    ========================= */
+
+    .comment {
+        color: #6a9955;
+    }
+
+    .preprocessor {
+        color: #c586c0;
+    }
+
+    .keyword {
+        color: #c586c0;
+    }
+
+    .type {
+        color: #4ec9b0;
+    }
+
+    .hex {
+        color: #b5cea8;
+    }
+
+    .number {
+        color: #b5cea8;
+    }
+
+
+    /* =========================
+       SCROLLBAR
+    ========================= */
+
+    .tree::-webkit-scrollbar,
+    .editor::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    .tree::-webkit-scrollbar-track,
+    .editor::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .tree::-webkit-scrollbar-thumb,
+    .editor::-webkit-scrollbar-thumb {
+        background: #33363c;
+    }
+
+    .tree::-webkit-scrollbar-thumb:hover,
+    .editor::-webkit-scrollbar-thumb:hover {
+        background: #464a52;
+    }
+
+
+    @media (max-width: 650px) {
+        .sidebar {
+            width: 230px;
+            min-width: 230px;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .sidebar {
+            display: none;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+            <div class="title">Offsets Viewer</div>
+
+            <div class="file-label">
+                dumpblyad.txt
+            </div>
+        </div>
+
+        <div class="search-wrap">
+            <input
+                class="search"
+                id="search"
+                type="text"
+                placeholder="search..."
+            >
+        </div>
+
+        <div
+            class="tree"
+            id="tree"
+        ></div>
+
+        
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div
+                class="filename"
+                id="filename"
+            >
+                dumpblyad.txt
+            </div>
+
+            <div class="actions">
+
+                <span
+                    class="info"
+                    id="info"
+                >
+                    loading...
+                </span>
+
+                <button
+                    class="copy"
+                    id="copy"
+                    title="Copy file"
+                >
+                    ⧉
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="editor">
+
+            <div
+                class="code"
+                id="code"
+            >
+                loading...
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+let rawCode = "";
+let allOffsets = [];
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(text) {
+
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+}
+
+
+/* =========================
+   SYNTAX HIGHLIGHTING
+
+   Important:
+   Each line is rendered ONCE.
+   No nested block elements.
+   No min-height.
+   No extra margins.
+
+   This prevents the huge gaps.
+========================= */
+
+function highlight(line) {
+
+    const escaped = escapeHtml(line);
+
+    if (
+        escaped.trim().startsWith("//") ||
+        escaped.trim().startsWith("/*") ||
+        escaped.trim().startsWith("*") ||
+        escaped.trim().endsWith("*/")
+    ) {
+        return `<span class="comment">${escaped}</span>`;
+    }
+
+    return escaped
+
+        .replace(
+            /(#pragma\s+once|#include\s+&lt;.*?&gt;)/g,
+            '<span class="preprocessor">$1</span>'
+        )
+
+        .replace(
+            /\b(namespace|inline|constexpr|const)\b/g,
+            '<span class="keyword">$1</span>'
+        )
+
+        .replace(
+            /\b(uintptr_t|int|float|double|bool|void)\b/g,
+            '<span class="type">$1</span>'
+        )
+
+        .replace(
+            /\b(0x[0-9A-Fa-f]+)\b/g,
+            '<span class="hex">$1</span>'
+        )
+
+        .replace(
+            /\b(\d+)\b/g,
+            '<span class="number">$1</span>'
+        );
+
+}
+
+
+/* =========================
+   PARSE OFFSETS
+========================= */
+
+function parseOffsets(code) {
+
+    const lines = code.split("\n");
+
+    const result = [];
+
+    let currentNamespace = null;
+
+    for (let i = 0; i < lines.length; i++) {
+
+        const line = lines[i];
+
+        const namespaceMatch = line.match(
+            /^\s*namespace\s+([A-Za-z_]\w*)\s*\{/
+        );
+
+        if (
+            namespaceMatch &&
+            namespaceMatch[1] !== "Offsets"
+        ) {
+            currentNamespace =
+                namespaceMatch[1];
+        }
+
+        const offsetMatch = line.match(
+            /inline\s+constexpr\s+\w+\s+(\w+)\s*=\s*(0x[0-9A-Fa-f]+|\d+)/
+        );
+
+        if (
+            offsetMatch &&
+            currentNamespace
+        ) {
+
+            result.push({
+                namespace: currentNamespace,
+                name: offsetMatch[1],
+                value: offsetMatch[2],
+                line: i + 1
+            });
+
+        }
+
+    }
+
+    return result;
+
+}
+
+
+/* =========================
+   RENDER CODE
+========================= */
+
+function renderCode(code) {
+
+    const container =
+        document.getElementById("code");
+
+    const lines =
+        code.split("\n");
+
+    let html = "";
+
+    lines.forEach((line, index) => {
+
+        const number = index + 1;
+
+        html +=
+            `<div class="line" id="line-${number}">` +
+                `<span class="line-number">${number}</span>` +
+                `<span class="line-code">${highlight(line) || " "}</span>` +
+            `</div>`;
+
+    });
+
+    container.innerHTML = html;
+
+
+    container
+        .querySelectorAll(".line")
+        .forEach(line => {
+
+            line.addEventListener(
+                "click",
+                function() {
+
+                    selectLine(
+                        this.id.replace("line-", "")
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================
+   SELECT LINE
+========================= */
+
+function selectLine(number) {
+
+    document
+        .querySelectorAll(".line.active")
+        .forEach(line => {
+            line.classList.remove("active");
+        });
+
+    const line =
+        document.getElementById(
+            "line-" + number
+        );
+
+    if (line) {
+        line.classList.add("active");
+    }
+
+}
+
+
+/* =========================
+   RENDER SIDEBAR
+========================= */
+
+function renderTree(items) {
+
+    const tree =
+        document.getElementById("tree");
+
+    const groups = {};
+
+    items.forEach(item => {
+
+        if (!groups[item.namespace]) {
+            groups[item.namespace] = [];
+        }
+
+        groups[item.namespace].push(item);
+
+    });
+
+    let html = "";
+
+
+    Object.entries(groups)
+        .forEach(([namespace, entries]) => {
+
+            const id =
+                "group-" +
+                namespace.replace(
+                    /[^a-zA-Z0-9]/g,
+                    ""
+                );
+
+
+            html += `
+                <div class="namespace">
+
+                    <button
+                        class="namespace-title"
+                        data-target="${id}"
+                    >
+
+                        <span class="arrow">⌄</span>
+
+                        ${namespace}
+
+                        <span class="namespace-count">
+                            ${entries.length}
+                        </span>
+
+                    </button>
+
+                    <div
+                        class="items"
+                        id="${id}"
+                    >
+            `;
+
+
+            entries.forEach(item => {
+
+                html += `
+                    <button
+                        class="offset"
+                        data-line="${item.line}"
+                    >
+
+                        <span class="offset-name">
+                            ${item.name}
+                        </span>
+
+                        <span class="offset-value">
+                            ${item.value}
+                        </span>
+
+                    </button>
+                `;
+
+            });
+
+
+            html += `
+                    </div>
+
+                </div>
+            `;
+
+        });
+
+
+    tree.innerHTML = html;
+
+
+    tree
+        .querySelectorAll(".namespace-title")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const target =
+                        document.getElementById(
+                            this.dataset.target
+                        );
+
+                    target.classList.toggle(
+                        "hidden"
+                    );
+
+                    const arrow =
+                        this.querySelector(".arrow");
+
+                    arrow.textContent =
+                        target.classList.contains("hidden")
+                            ? "›"
+                            : "⌄";
+
+                }
+            );
+
+        });
+
+
+    tree
+        .querySelectorAll(".offset")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const number =
+                        this.dataset.line;
+
+                    const line =
+                        document.getElementById(
+                            "line-" + number
+                        );
+
+                    if (!line) return;
+
+                    line.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                    selectLine(number);
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+document
+    .getElementById("search")
+    .addEventListener(
+        "input",
+        function() {
+
+            const query =
+                this.value
+                    .toLowerCase()
+                    .trim();
+
+            const filtered =
+                allOffsets.filter(item => {
+
+                    return (
+
+                        item.namespace
+                            .toLowerCase()
+                            .includes(query)
+
+                        ||
+
+                        item.name
+                            .toLowerCase()
+                            .includes(query)
+
+                        ||
+
+                        item.value
+                            .toLowerCase()
+                            .includes(query)
+
+                    );
+
+                });
+
+            renderTree(filtered);
+
+        }
+    );
+
+
+/* =========================
+   COPY
+========================= */
+
+document
+    .getElementById("copy")
+    .addEventListener(
+        "click",
+        async function() {
+
+            if (!rawCode) return;
+
+            try {
+
+                await navigator
+                    .clipboard
+                    .writeText(rawCode);
+
+            }
+
+            catch {
+
+                const textarea =
+                    document.createElement(
+                        "textarea"
+                    );
+
+                textarea.value = rawCode;
+
+                document.body.appendChild(
+                    textarea
+                );
+
+                textarea.select();
+
+                document.execCommand(
+                    "copy"
+                );
+
+                textarea.remove();
+
+            }
+
+            this.textContent = "✓";
+
+            setTimeout(() => {
+
+                this.textContent = "⧉";
+
+            }, 1000);
+
+        }
+    );
+
+
+/* =========================
+   LOAD PUBLIC TXT FILE
+========================= */
+
+fetch("dumpblyad.txt")
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error(
+                "Could not load dumpblyad.txt"
+            );
+        }
+
+        return response.text();
+
+    })
+
+    .then(code => {
+
+        rawCode = code;
+
+        allOffsets =
+            parseOffsets(code);
+
+        renderCode(code);
+
+        renderTree(allOffsets);
+
+        document
+            .getElementById("info")
+            .textContent =
+                allOffsets.length +
+                " offsets";
+
+    })
+
+    .catch(() => {
+
+        document
+            .getElementById("code")
+            .innerHTML = `
+                <div style="
+                    padding: 14px 16px;
+                    color: #888;
+                    font-family: Consolas, monospace;
+                    font-size: 12px;
+                ">
+                    Could not load dumpblyad.txt
+                </div>
+            `;
+
+        document
+            .getElementById("info")
+            .textContent =
+                "error";
+
+    });
+
+</script>
+
+</body>
+</html>
