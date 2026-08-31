@@ -31,10 +31,6 @@
         display: flex;
     }
 
-    /* =========================
-       SIDEBAR
-    ========================= */
-
     .sidebar {
         width: 310px;
         min-width: 310px;
@@ -188,9 +184,9 @@
     
 
 
-    /* =========================
-       MAIN
-    ========================= */
+    /* 
+       my ass is so tired
+     */
 
     .main {
         flex: 1;
@@ -263,11 +259,6 @@
         color: #e0e0e0;
     }
 
-
-    /* =========================
-       CODE VIEW
-    ========================= */
-
     .editor {
         flex: 1;
         overflow: auto;
@@ -328,10 +319,6 @@
     }
 
 
-    /* =========================
-       SYNTAX COLORS
-    ========================= */
-
     .comment {
         color: #6a9955;
     }
@@ -356,10 +343,6 @@
         color: #b5cea8;
     }
 
-
-    /* =========================
-       SCROLLBAR
-    ========================= */
 
     .tree::-webkit-scrollbar,
     .editor::-webkit-scrollbar {
@@ -485,12 +468,6 @@
 
 let rawCode = "";
 let allOffsets = [];
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
 function escapeHtml(text) {
 
     return text
@@ -499,19 +476,6 @@ function escapeHtml(text) {
         .replace(/>/g, "&gt;");
 
 }
-
-
-/* =========================
-   SYNTAX HIGHLIGHTING
-
-   Important:
-   Each line is rendered ONCE.
-   No nested block elements.
-   No min-height.
-   No extra margins.
-
-   This prevents the huge gaps.
-========================= */
 
 function highlight(line) {
 
@@ -554,11 +518,6 @@ function highlight(line) {
         );
 
 }
-
-
-/* =========================
-   PARSE OFFSETS
-========================= */
 
 function parseOffsets(code) {
 
@@ -608,11 +567,6 @@ function parseOffsets(code) {
 
 }
 
-
-/* =========================
-   RENDER CODE
-========================= */
-
 function renderCode(code) {
 
     const container =
@@ -657,11 +611,6 @@ function renderCode(code) {
 
 }
 
-
-/* =========================
-   SELECT LINE
-========================= */
-
 function selectLine(number) {
 
     document
@@ -680,11 +629,6 @@ function selectLine(number) {
     }
 
 }
-
-
-/* =========================
-   RENDER SIDEBAR
-========================= */
 
 function renderTree(items) {
 
@@ -839,11 +783,6 @@ function renderTree(items) {
 
 }
 
-
-/* =========================
-   SEARCH
-========================= */
-
 document
     .getElementById("search")
     .addEventListener(
@@ -884,11 +823,6 @@ document
 
         }
     );
-
-
-/* =========================
-   COPY
-========================= */
 
 document
     .getElementById("copy")
@@ -939,11 +873,6 @@ document
 
         }
     );
-
-
-/* =========================
-   LOAD PUBLIC TXT FILE
-========================= */
 
 fetch("dumpblyad.txt")
 
