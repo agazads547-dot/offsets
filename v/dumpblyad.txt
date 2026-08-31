@@ -4,7 +4,7 @@
 /*  Dumper Version  : 1.0.2
 /*  Dumped At       : 12:09:59 2026-08-29
 /*  Total Offsets   : 157
-/*  nigga fuh those guys (yes)
+/*  fuck starmax
 */
 
 #pragma once
